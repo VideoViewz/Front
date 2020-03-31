@@ -28,23 +28,6 @@
   color: #61dafb;
 }
 
-.formSection {
-  margin-top: 30px;
-}
-
-.formSection p {
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.dashboardSection {
-  margin-top: 50px;
-}
-
-.reviewsWrapper {
-  margin-top: 50px;
-}
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
