@@ -1,6 +1,5 @@
 import React from 'react';
 import { Store } from '../store-folder/Store';
-import UploadForm from '../components/UploadForm';
 import { observer } from 'mobx-react';
 
 interface IProps {
@@ -26,7 +25,22 @@ class Form extends React.Component<IProps> {
                         nav template
                     </div>
                 </div>
-                <UploadForm />
+                <div className="row backgroundImgStyle">
+                    <div className="col-12">
+                        <div className="row">
+                            <div className="col-lg-12 ">
+                                <h1 className="uploadVideo">Upload Video</h1>
+                            </div>
+                        </div>
+                        <div style={{ padding: '13px' }} className="row">
+                            <div className="col-lg-12">
+                                <button className="uploadButtonStyle">
+                                    <h1 className="plusStyle">+</h1>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

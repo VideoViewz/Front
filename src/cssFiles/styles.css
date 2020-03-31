@@ -1,13 +1,62 @@
-.paddingNav{
+.paddingNav {
     padding-top: 39px;
     padding-bottom: 39px;
 }
 
-.imgStyle{
+.imgStyle {
     width: 140px;
     height: 25px;
 }
 
-.backgroundImgStyle{
-    background: url(../pictures/background.jpg) no-repeat scroll center top;
+.backgroundImgStyle {
+    background: #232323;
+    position: relative;
+    z-index: 0;
+    text-align: center;
+}
+
+.backgroundImgStyle::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    content: '';
+    background: url(../pictures//background.jpg) no-repeat scroll center top;
+    opacity: 0.2;
+    z-index: -1;
+}
+
+.uploadVideo {
+    font-size: 30px;
+    line-height: 1;
+    font-weight: lighter;
+    color: #fff;
+    margin-bottom: 13px;
+    margin-top: 13px;
+}
+
+.uploadButtonStyle {
+    border-radius: 100%;
+    font-size: 60px;
+    padding: 0;
+    border: 0;
+    height: 100%;
+    width: 70px;
+    background: #f1f4f5;
+    transition: all 300ms ease-in-out 0s;
+}
+
+.uploadButtonStyle:hover {
+    background: #e74c3c;
+}
+
+.plusStyle {
+    color: rgb(130, 138, 145);
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.plusStyle:hover{
+    color:white;
 }
