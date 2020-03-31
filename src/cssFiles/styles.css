@@ -1,0 +1,13 @@
+.paddingNav{
+    padding-top: 39px;
+    padding-bottom: 39px;
+}
+
+.imgStyle{
+    width: 140px;
+    height: 25px;
+}
+
+.backgroundImgStyle{
+    background: url(../pictures/background.jpg) no-repeat scroll center top;
+}
