@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import ReactPlayer from 'react-player';
 import { Store } from '../store-folder/Store';
 import { observer } from 'mobx-react';
 
@@ -88,10 +87,13 @@ class Form extends React.Component<IProps, IState> {
             </div>
             <div className="row">
               <div className="col-lg-12">
-                <ReactPlayer url='https://www.youtube.com/watch?v=OboAhfz-kko' playing />
+                <video
+                  className="movie"
+                  src="https://www.dropbox.com/s/tdchpmybrk6ylqx/songVideo.mp4?raw=1"
+                  controls
+                ></video>
               </div>
             </div>
-
           </div>
         </div>
       </div>
