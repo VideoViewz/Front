@@ -10,7 +10,7 @@
 }
 
 .backgroundImgStyle {
-    background: #232323;
+    background: #2A4D69;
     position: relative;
     z-index: 0;
     text-align: center;
@@ -23,7 +23,6 @@
     height: 100%;
     width: 100%;
     content: '';
-    background: url(../pictures//background.jpg) no-repeat scroll center top;
     opacity: 0.2;
     z-index: -1;
 }

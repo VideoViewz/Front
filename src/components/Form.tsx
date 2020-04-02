@@ -12,6 +12,7 @@ interface IState {
   videoName: string;
   uploader: string;
   course: string;
+  urlResults: string[];
 }
 
 class Form extends React.Component<IProps, IState> {
@@ -19,7 +20,8 @@ class Form extends React.Component<IProps, IState> {
     url: '',
     videoName: '',
     uploader: 'Tomer',
-    course: 'Math'
+    course: 'Math',
+    urlResults: []
   };
 
   handleSubmit = () => {
@@ -30,11 +32,20 @@ class Form extends React.Component<IProps, IState> {
       uploader: this.state.uploader,
       course: this.state.course
     })
-      .then(res => {
-        // console.log(res);
-        // console.log(res.data);
+      .then(() => {
+        alert('Upload Success!')
       })
   };
+
+  componentDidMount() {
+    let html: string;
+    html = "https://videoviewz-staging.herokuapp.com/video/" + this.state.course;
+    axios.get(html)
+      .then(res => {
+        this.setState({ urlResults: res.data });
+        console.log(this.state.urlResults);
+      })
+  }
 
   setURL = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ url: e.target.value });
@@ -93,6 +104,15 @@ class Form extends React.Component<IProps, IState> {
               <div className="col-lg-12">
                 <input onChange={this.setURL} type="text" />
               </div>
+            </div>
+            <div className="row">
+              <div className="col-md-3"></div>
+              <div style={{ marginBottom: "40px" }} className="col-md-6">
+                <div className="embed-responsive embed-responsive-16by9">
+                  <iframe className="embed-responsive-item" src="https://www.youtube.com/embed/zlRq8RAawng" allowFullScreen></iframe>
+                </div>
+              </div>
+              <div className="col-md-3"></div>
             </div>
             <div className="row">
               <div className="col-md-3"></div>
