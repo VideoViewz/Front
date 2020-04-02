@@ -8,41 +8,37 @@ interface IProps {
 }
 
 interface IState {
-  file: Blob;
-  name: string;
-  user: string;
+  url: string;
+  videoName: string;
+  uploader: string;
   course: string;
 }
 
 class Form extends React.Component<IProps, IState> {
   state: IState = {
-    file: new File([''], 'filename'),
-    name: '',
-    user: 'Tomer',
+    url: '',
+    videoName: '',
+    uploader: 'Tomer',
     course: 'Math'
   };
 
-  onChangeHandler = (event: any) => {
-    console.log(event.target.files[0]);
-    this.setState({
-      file: event.target.files[0],
-      name: event.target.files[0].name
-    });
-  };
-
   handleSubmit = () => {
-    console.log(this.state.file);
-    const formData = new FormData();
-    formData.append('file', this.state.file);
-    formData.append('name', this.state.name);
-    formData.append('user', this.state.user);
-    formData.append('course', this.state.course);
 
-    axios.post(`http://localhost:3000/video/upload`, formData).then(res => {
-      console.log(res);
-      console.log(res.data);
-    });
+    axios.post(`https://videoviewz-staging.herokuapp.com/video/upload`, {
+      url: this.state.url,
+      videoName: 'COD',
+      uploader: this.state.uploader,
+      course: this.state.course
+    })
+      .then(res => {
+        // console.log(res);
+        // console.log(res.data);
+      })
   };
+
+  setURL = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ url: e.target.value });
+  }
 
   render() {
     return (
@@ -95,16 +91,12 @@ class Form extends React.Component<IProps, IState> {
             </div>
             <div className="row">
               <div className="col-lg-12">
-                <input
-                  type="file"
-                  name="file"
-                  onChange={this.onChangeHandler}
-                />
+                <input onChange={this.setURL} type="text" />
               </div>
             </div>
             <div className="row">
               <div className="col-md-3"></div>
-              <div style={{marginBottom:"40px"}} className="col-md-6">
+              <div style={{ marginBottom: "40px" }} className="col-md-6">
                 <div className="embed-responsive embed-responsive-16by9">
                   <iframe className="embed-responsive-item" src="https://www.youtube.com/embed/zlRq8RAawng" allowFullScreen></iframe>
                 </div>
