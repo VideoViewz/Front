@@ -7,7 +7,7 @@ cache:
 stages:
   - deploy
 
-deploy:
+pages:
   stage: deploy
   script:
    - npm install
