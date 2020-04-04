@@ -1,11 +1,21 @@
-pages:
+image: node:latest
+
+cache:
+  paths:
+    - node_modules/
+
+stages:
+  - deploy
+
+deploy:
   stage: deploy
   script:
-  - mkdir .public
-  - cp -r * .public
-  - mv .public public
+   - npm install
+   - CI=true npm run build
+   - rm -rf public
+   - mv build public
   artifacts:
     paths:
-    - public
+      - public
   only:
-  - master
+   - master
