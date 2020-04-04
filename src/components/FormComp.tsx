@@ -25,12 +25,24 @@ class FormComp extends React.Component<IProps, IState> {
   };
 
   handleSubmit = () => {
+    let wasError: boolean = false;
 
-    if (this.state.url.includes('https://www.youtube.com/')) {
+    if (!this.state.url.includes('https://www.youtube.com/')) {
+      wasError = true;
+      document.getElementById('url')!.style.border=' 1.5px solid red'
+    }
 
+    if (this.state.videoName === '') {
+      wasError = true;
+      document.getElementById('videoName')!.style.border=' 1.5px solid red'
+    }
+
+    if (!wasError) {
+      document.getElementById('url')!.style.border='none';
+      document.getElementById('videoName')!.style.border='none';
       axios.post(`https://videoviewz-staging.herokuapp.com/video/upload`, {
         url: this.state.url,
-        videoName: 'COD',
+        videoName: this.state.videoName,
         uploader: this.state.uploader,
         course: this.state.course
       })
@@ -40,9 +52,6 @@ class FormComp extends React.Component<IProps, IState> {
           this.props.store.urlResults.push();
           this.props.store.urlResults.pop();
         })
-    }
-    else {
-      alert('Youtube link is not valid!');
     }
   };
 
@@ -57,6 +66,10 @@ class FormComp extends React.Component<IProps, IState> {
 
   setURL = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ url: e.target.value });
+  }
+
+  setVideoName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ videoName: e.target.value });
   }
 
   render() {
@@ -98,7 +111,12 @@ class FormComp extends React.Component<IProps, IState> {
             </div>
             <div className="row">
               <div className="col-lg-12">
-                <input onChange={this.setURL} type="text" />
+                <input id='url' onChange={this.setURL} type="text" />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-12">
+                <input id='videoName' onChange={this.setVideoName} type="text" />
               </div>
             </div>
             {
