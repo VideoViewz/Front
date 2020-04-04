@@ -37,7 +37,7 @@ class FormComp extends React.Component<IProps, IState> {
         .then((res) => {
           res.data.error === 'Video already exists' ? alert('Video already exists!') : alert('Upload Success!');
           //push an empty object and pop it again to re- render the component again( observer component)
-          this.props.store.urlResults.push(Object(undefined));
+          this.props.store.urlResults.push();
           this.props.store.urlResults.pop();
         })
     }
