@@ -1,7 +1,8 @@
 import React from 'react';
+import { Video } from '../classes/Video';
 
 interface IProps {
-    url: string;
+    video: Video;
 }
 
 class YoutubeComp extends React.Component<IProps> {
@@ -11,7 +12,7 @@ class YoutubeComp extends React.Component<IProps> {
                 <div className="col-md-3"></div>
                 <div style={{ marginBottom: "40px" }} className="col-md-6">
                     <div className="embed-responsive embed-responsive-16by9">
-                        <iframe className="embed-responsive-item" src={this.props.url} allowFullScreen></iframe>
+                        <iframe title={'aa'} className="embed-responsive-item" src={this.props.video.url} allowFullScreen></iframe>
                     </div>
                 </div>
                 <div className="col-md-3"></div>

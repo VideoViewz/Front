@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Store } from '../store-folder/Store';
 import YoutubeComp from './YoutubeComp'
-import { Navbar, Button, NavDropdown, Nav, FormControl, Form } from 'react-bootstrap'
+import { Navbar, Button, Nav, FormControl, Form } from 'react-bootstrap'
 import { observer } from 'mobx-react';
 
 interface IProps {
@@ -52,7 +52,6 @@ class FormComp extends React.Component<IProps, IState> {
     axios.get(html)
       .then(res => {
         this.props.store.updateUrlResults(res.data);
-        // console.log(this.props.store.urlResults);
       })
   }
 
@@ -73,13 +72,6 @@ class FormComp extends React.Component<IProps, IState> {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-              {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-              </NavDropdown> */}
             </Nav>
             <Form inline>
               <FormControl type="text" placeholder="Search" className="mr-sm-2" />
@@ -111,7 +103,7 @@ class FormComp extends React.Component<IProps, IState> {
             </div>
             {
               this.props.store.urlResults.map((res, i) =>
-                <YoutubeComp key={i} url={res} />
+                <YoutubeComp key={i} video={res} />
               )
             }
           </div>

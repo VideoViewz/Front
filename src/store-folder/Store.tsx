@@ -1,8 +1,12 @@
+import { Video } from '../classes/Video';
 export class Store {
 
-    urlResults: string[] = [];
+    urlResults: Video[] = [];
 
-    updateUrlResults = (urlResults: string[]) => {
-        this.urlResults = urlResults;
+    updateUrlResults = (videosResults: any) => {
+        for (let i = 0; i < videosResults.length; i++) {
+            this.urlResults[i] = new Video(videosResults[i].url,
+                videosResults[i].videoName);
+        }
     }
 }
