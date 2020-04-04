@@ -2,7 +2,8 @@ import { Video } from '../classes/Video';
 export class Store {
 
     urlResults: Video[] = [];
-
+    searchedUrls: Video[] = [];
+    
     updateUrlResults = (videosResults: Video[]) => {
         this.urlResults = videosResults;
     }
