@@ -70,11 +70,10 @@ class FormComp extends React.Component<IProps, IState> {
   searchVideos = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value !== '') {
       let tempVideoArr: Video[];
-      tempVideoArr = this.props.store.urlResults.filter(video => video.videoName.includes(e.target.value));
+      tempVideoArr = this.props.store.urlResults.filter(video => video.videoName.toLowerCase().includes(e.target.value.toLowerCase()));
       if (tempVideoArr.length === 0)
         this.setState({ noVideosFound: true });
-      else
-      {
+      else {
         this.setState({ noVideosFound: false });
         this.props.store.updateSearchedVideos(tempVideoArr);
       }
@@ -146,7 +145,7 @@ class FormComp extends React.Component<IProps, IState> {
           <div className="col-lg-12">
             <div className="row">
               <div className="col-lg-12 ">
-                <h1 className="uploadVideo">Upload Video</h1>
+                <p className="uploadVideo">Upload Video</p>
               </div>
             </div>
             <div style={{ padding: '13px' }} className="row">
@@ -161,12 +160,12 @@ class FormComp extends React.Component<IProps, IState> {
             </div>
             <div className="row">
               <div className="col-lg-12">
-                <input id='url' onChange={this.setURL} type="text" />
+                <FormControl onChange={this.setURL} id='url' type="text" placeholder="Enter youtube link" className="mx-auto inputStyle" />
               </div>
             </div>
             <div className="row">
               <div className="col-lg-12">
-                <input id='videoName' onChange={this.setVideoName} type="text" />
+                <FormControl onChange={this.setVideoName} id='videoName' type="text" placeholder="Enter video name" className="mx-auto inputStyle" />
               </div>
             </div>
             {this.loadVideos()}
