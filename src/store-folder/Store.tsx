@@ -11,4 +11,8 @@ export class Store {
     updateSearchedVideos = (searchedVideos: Video[]) => {
         this.searchedUrls = searchedVideos;
     }
+
+    resetSearchedUrls = () => {
+        this.searchedUrls = [];
+    }
 }
