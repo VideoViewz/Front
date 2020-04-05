@@ -2,7 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import { Store } from '../store-folder/Store';
 import YoutubeComp from './YoutubeComp'
-import { Navbar, Button, Nav, FormControl, Form } from 'react-bootstrap'
+import { Video } from '../classes/Video';
+import { Navbar, Nav, FormControl, Form } from 'react-bootstrap'
 import { observer } from 'mobx-react';
 
 interface IProps {
@@ -14,6 +15,7 @@ interface IState {
   videoName: string;
   uploader: string;
   course: string;
+  noVideosFound: boolean;
 }
 
 class FormComp extends React.Component<IProps, IState> {
@@ -21,7 +23,8 @@ class FormComp extends React.Component<IProps, IState> {
     url: '',
     videoName: '',
     uploader: 'Tomer',
-    course: 'Math'
+    course: 'Math',
+    noVideosFound: false
   };
 
   handleSubmit = () => {
@@ -29,17 +32,17 @@ class FormComp extends React.Component<IProps, IState> {
 
     if (!this.state.url.includes('https://www.youtube.com/')) {
       wasError = true;
-      document.getElementById('url')!.style.border=' 1.5px solid red'
+      document.getElementById('url')!.style.border = ' 1.5px solid red'
     }
 
     if (this.state.videoName === '') {
       wasError = true;
-      document.getElementById('videoName')!.style.border=' 1.5px solid red'
+      document.getElementById('videoName')!.style.border = ' 1.5px solid red'
     }
 
     if (!wasError) {
-      document.getElementById('url')!.style.border='none';
-      document.getElementById('videoName')!.style.border='none';
+      document.getElementById('url')!.style.border = 'none';
+      document.getElementById('videoName')!.style.border = 'none';
       axios.post(`https://videoviewz-staging.herokuapp.com/video/upload`, {
         url: this.state.url,
         videoName: this.state.videoName,
@@ -64,12 +67,60 @@ class FormComp extends React.Component<IProps, IState> {
       })
   }
 
+  searchVideos = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value !== '') {
+      let tempVideoArr: Video[];
+      tempVideoArr = this.props.store.urlResults.filter(video => video.videoName.includes(e.target.value));
+      if (tempVideoArr.length === 0)
+        this.setState({ noVideosFound: true });
+      else
+      {
+        this.setState({ noVideosFound: false });
+        this.props.store.updateSearchedVideos(tempVideoArr);
+      }
+    }
+    else {
+      this.setState({ noVideosFound: false })
+      this.props.store.updateSearchedVideos([]);
+    }
+
+  }
+
   setURL = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ url: e.target.value });
   }
 
   setVideoName = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ videoName: e.target.value });
+  }
+
+  loadVideos = () => {
+    if (this.state.noVideosFound)
+      return (
+        <div>Not Found</div>
+      );
+    else if (this.props.store.searchedUrls.length === 0) {
+      return (
+        <div>
+          {
+            this.props.store.urlResults.map((res, i) =>
+              <YoutubeComp key={i} video={res} />
+            )
+          }
+        </div>
+      );
+    }
+    else {
+      return (
+        <div>
+          {
+            this.props.store.searchedUrls.map((res, i) =>
+              <YoutubeComp key={i} video={res} />
+            )
+          }
+        </div>
+      );
+    }
   }
 
   render() {
@@ -87,8 +138,7 @@ class FormComp extends React.Component<IProps, IState> {
             <Nav className="mr-auto">
             </Nav>
             <Form inline>
-              <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-              <Button variant="outline-success">Search</Button>
+              <FormControl onChange={this.searchVideos} type="text" placeholder="Search for video name" className="mr-sm-2" />
             </Form>
           </Navbar.Collapse>
         </Navbar>
@@ -119,11 +169,7 @@ class FormComp extends React.Component<IProps, IState> {
                 <input id='videoName' onChange={this.setVideoName} type="text" />
               </div>
             </div>
-            {
-              this.props.store.urlResults.map((res, i) =>
-                <YoutubeComp key={i} video={res} />
-              )
-            }
+            {this.loadVideos()}
           </div>
         </div>
       </div>

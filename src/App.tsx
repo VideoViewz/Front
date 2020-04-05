@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 decorate(Store, {
   urlResults: observable, //observable are like states
+  searchedUrls: observable,
   updateUrlResults: action, //action functions are those that modify observables
 });
 
