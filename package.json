@@ -1,6 +1,6 @@
 {
   "homepage": ".",
-  "name": "notes_management",
+  "name": "videoview-front",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
