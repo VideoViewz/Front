@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/VideoView-GitHub/static/css/main.7728337f.chunk.css",
-    "main.js": "/VideoView-GitHub/static/js/main.444c5c78.chunk.js",
-    "main.js.map": "/VideoView-GitHub/static/js/main.444c5c78.chunk.js.map",
-    "runtime-main.js": "/VideoView-GitHub/static/js/runtime-main.36219a59.js",
-    "runtime-main.js.map": "/VideoView-GitHub/static/js/runtime-main.36219a59.js.map",
-    "static/css/2.47e06e2e.chunk.css": "/VideoView-GitHub/static/css/2.47e06e2e.chunk.css",
-    "static/js/2.7706a379.chunk.js": "/VideoView-GitHub/static/js/2.7706a379.chunk.js",
-    "static/js/2.7706a379.chunk.js.map": "/VideoView-GitHub/static/js/2.7706a379.chunk.js.map",
-    "index.html": "/VideoView-GitHub/index.html",
-    "precache-manifest.b2b9ff3dffc9e302d25cae05b8359706.js": "/VideoView-GitHub/precache-manifest.b2b9ff3dffc9e302d25cae05b8359706.js",
-    "service-worker.js": "/VideoView-GitHub/service-worker.js",
-    "static/css/2.47e06e2e.chunk.css.map": "/VideoView-GitHub/static/css/2.47e06e2e.chunk.css.map",
-    "static/css/main.7728337f.chunk.css.map": "/VideoView-GitHub/static/css/main.7728337f.chunk.css.map",
-    "static/js/2.7706a379.chunk.js.LICENSE": "/VideoView-GitHub/static/js/2.7706a379.chunk.js.LICENSE"
+    "main.css": "/WebFront/static/css/main.7728337f.chunk.css",
+    "main.js": "/WebFront/static/js/main.0ba75148.chunk.js",
+    "main.js.map": "/WebFront/static/js/main.0ba75148.chunk.js.map",
+    "runtime-main.js": "/WebFront/static/js/runtime-main.1b9f4276.js",
+    "runtime-main.js.map": "/WebFront/static/js/runtime-main.1b9f4276.js.map",
+    "static/css/2.47e06e2e.chunk.css": "/WebFront/static/css/2.47e06e2e.chunk.css",
+    "static/js/2.43ebf443.chunk.js": "/WebFront/static/js/2.43ebf443.chunk.js",
+    "static/js/2.43ebf443.chunk.js.map": "/WebFront/static/js/2.43ebf443.chunk.js.map",
+    "index.html": "/WebFront/index.html",
+    "precache-manifest.c39df998a654af1ecdada8ab1437027c.js": "/WebFront/precache-manifest.c39df998a654af1ecdada8ab1437027c.js",
+    "service-worker.js": "/WebFront/service-worker.js",
+    "static/css/2.47e06e2e.chunk.css.map": "/WebFront/static/css/2.47e06e2e.chunk.css.map",
+    "static/css/main.7728337f.chunk.css.map": "/WebFront/static/css/main.7728337f.chunk.css.map",
+    "static/js/2.43ebf443.chunk.js.LICENSE": "/WebFront/static/js/2.43ebf443.chunk.js.LICENSE"
   },
   "entrypoints": [
-    "static/js/runtime-main.36219a59.js",
+    "static/js/runtime-main.1b9f4276.js",
     "static/css/2.47e06e2e.chunk.css",
-    "static/js/2.7706a379.chunk.js",
+    "static/js/2.43ebf443.chunk.js",
     "static/css/main.7728337f.chunk.css",
-    "static/js/main.444c5c78.chunk.js"
+    "static/js/main.0ba75148.chunk.js"
   ]
 }
