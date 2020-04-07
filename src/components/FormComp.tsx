@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Store } from '../store-folder/Store';
 import YoutubeComp from './YoutubeComp'
 import { Video } from '../classes/Video';
-import { Navbar, Nav, FormControl, Form } from 'react-bootstrap'
+import { Navbar, Nav, NavDropdown, FormControl, Form } from 'react-bootstrap';
 import { observer } from 'mobx-react';
 
 interface IProps {
@@ -14,8 +14,9 @@ interface IState {
   url: string;
   videoName: string;
   uploader: string;
-  course: string;
+  selectedCoursePost: string;
   noVideosFound: boolean;
+  selectedCourse: string;
 }
 
 class FormComp extends React.Component<IProps, IState> {
@@ -23,8 +24,9 @@ class FormComp extends React.Component<IProps, IState> {
     url: '',
     videoName: '',
     uploader: 'Tomer',
-    course: 'Math',
-    noVideosFound: false
+    selectedCoursePost: '',
+    noVideosFound: false,
+    selectedCourse: 'Select a course'
   };
 
   handleSubmit = () => {
@@ -40,14 +42,20 @@ class FormComp extends React.Component<IProps, IState> {
       document.getElementById('videoName')!.style.border = ' 1.5px solid red'
     }
 
+    if (this.state.selectedCoursePost === '') {
+      wasError = true;
+      document.getElementById('selectedCoursePost')!.style.border = ' 1.5px solid red';
+    }
+
     if (!wasError) {
       document.getElementById('url')!.style.border = 'none';
       document.getElementById('videoName')!.style.border = 'none';
+      document.getElementById('selectedCoursePost')!.style.border = 'none';
       axios.post(`https://videoviewz-staging.herokuapp.com/video/upload`, {
         url: this.state.url,
         videoName: this.state.videoName,
         uploader: this.state.uploader,
-        course: this.state.course
+        course: this.state.selectedCoursePost
       })
         .then((res) => {
           res.data.error === 'Video already exists' ? alert('Video already exists!') : alert('Upload Success!');
@@ -61,11 +69,18 @@ class FormComp extends React.Component<IProps, IState> {
 
   loadData = () => {
     let html: string;
-    html = "https://videoviewz-staging.herokuapp.com/video/" + this.state.course;
+    html = "https://videoviewz-staging.herokuapp.com/video/" + this.state.selectedCourse;
     axios.get(html)
       .then(res => {
         this.props.store.updateUrlResults(res.data);
       })
+
+    html = "https://videoviewz-staging.herokuapp.com/course";
+    axios.get(html)
+      .then(res => {
+        this.props.store.loadAllCourses(res.data);
+      })
+
   }
 
   searchVideos = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,7 +112,11 @@ class FormComp extends React.Component<IProps, IState> {
   loadVideos = () => {
     if (this.state.noVideosFound)
       return (
-        <div>Not Found</div>
+        <p className="videoNameStyle">No video found</p>
+      );
+    else if (this.props.store.urlResults.length === 0)
+      return (
+        <p className="videoNameStyle">No videos for the selected course</p>
       );
     else if (this.props.store.searchedUrls.length === 0) {
       return (
@@ -123,6 +142,15 @@ class FormComp extends React.Component<IProps, IState> {
     }
   }
 
+  handleSelectedCourse = (eventKey: string) => {
+    this.setState({ selectedCourse: eventKey });
+  }
+
+  changeSelectedCoursePost = () => {
+    let course = (document.getElementById("selectedCoursePost")! as HTMLInputElement).value;
+    this.setState({ selectedCoursePost: course });
+  }
+
   render() {
     return (
       <div>
@@ -136,9 +164,16 @@ class FormComp extends React.Component<IProps, IState> {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
+              <NavDropdown onSelect={this.handleSelectedCourse} title={this.state.selectedCourse} id="coursesDrop">
+                {
+                  this.props.store.allCourses.map((course, i) => {
+                    return <NavDropdown.Item key={i} eventKey={course.name}>{course.name}</NavDropdown.Item>
+                  })
+                }
+              </NavDropdown>
             </Nav>
             <Form inline>
-              <FormControl onChange={this.searchVideos} type="text" placeholder="Search for video name" className="mr-sm-2" />
+              <FormControl onChange={this.searchVideos} type="text" placeholder="Search for video name" className="mx-auto" />
             </Form>
           </Navbar.Collapse>
         </Navbar>
@@ -157,6 +192,18 @@ class FormComp extends React.Component<IProps, IState> {
                 >
                   <h1 className="plusStyle">+</h1>
                 </button>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-12">
+                <select onChange={() => this.changeSelectedCoursePost()} id="selectedCoursePost">
+                  <option hidden>Select a course</option>
+                  {
+                    this.props.store.allCourses.map((course, i) => {
+                      return <option key={i} value={course.name}>{course.name}</option>
+                    })
+                  }
+                </select>
               </div>
             </div>
             <div className="row">

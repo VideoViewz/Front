@@ -78,3 +78,10 @@
     margin-bottom: 10px;
 }
 
+select {
+    border-radius: .25rem;
+    border:none;
+    margin-bottom: 10px !important;
+    padding:4px;
+  }
+
