@@ -5,13 +5,18 @@ export class Store {
     urlResults: Video[] = [];
     searchedUrls: Video[] = [];
     allCourses: CourseClass[] = [];
+    didLoadData: boolean = false;
 
     updateUrlResults = (videosResults: Video[]) => {
         this.urlResults = videosResults;
     }
 
-    loadAllCourses= (courses: CourseClass[])=>{
-        this.allCourses=courses;
+    setDidLoadData = () => {
+        this.didLoadData = true;
+    }
+
+    loadAllCourses = (courses: CourseClass[]) => {
+        this.allCourses = courses;
     }
 
     updateSearchedVideos = (searchedVideos: Video[]) => {

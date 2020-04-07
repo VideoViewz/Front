@@ -26,7 +26,7 @@ class FormComp extends React.Component<IProps, IState> {
     uploader: 'Tomer',
     selectedCoursePost: '',
     noVideosFound: false,
-    selectedCourse: 'Select a course'
+    selectedCourse: 'Select a course',
   };
 
   handleSubmit = () => {
@@ -68,19 +68,24 @@ class FormComp extends React.Component<IProps, IState> {
   };
 
   loadData = () => {
-    let html: string;
-    html = "https://videoviewz-staging.herokuapp.com/video/" + this.state.selectedCourse;
-    axios.get(html)
-      .then(res => {
-        this.props.store.updateUrlResults(res.data);
-      })
+    // if (!this.props.store.didLoadData) {
+      this.props.store.setDidLoadData();
+      let html: string;
+      html = "https://videoviewz-staging.herokuapp.com/video/" + this.state.selectedCourse;
+      axios.get(html)
+        .then(res => {
+          // debugger;
+          this.props.store.updateUrlResults(res.data);
+          console.log(res.data);
+        })
 
-    html = "https://videoviewz-staging.herokuapp.com/course";
-    axios.get(html)
-      .then(res => {
-        this.props.store.loadAllCourses(res.data);
-      })
-
+      html = "https://videoviewz-staging.herokuapp.com/course";
+      axios.get(html)
+        .then(res => {
+          this.props.store.loadAllCourses(res.data);
+          console.log(res.data);
+        })
+    // }
   }
 
   searchVideos = (e: React.ChangeEvent<HTMLInputElement>) => {
