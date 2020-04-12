@@ -163,6 +163,7 @@ class FormComp extends React.Component<IProps, IState> {
   render() {
     return (
       <div>
+        {alert()}
         <Navbar bg="light" expand="lg">
           <img style={{ marginBottom: '5px' }}
             className="imgStyle"
