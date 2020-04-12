@@ -4,6 +4,7 @@ import { Store } from '../store-folder/Store';
 import YoutubeComp from './YoutubeComp'
 import { Video } from '../classes/Video';
 import { Navbar, Nav, NavDropdown, FormControl, Form } from 'react-bootstrap';
+import { CourseClass } from '../classes/CourseClass';
 import { observer } from 'mobx-react';
 
 interface IProps {
@@ -17,6 +18,7 @@ interface IState {
   selectedCoursePost: string;
   noVideosFound: boolean;
   selectedCourse: string;
+  allCourses: CourseClass[];
 }
 
 class FormComp extends React.Component<IProps, IState> {
@@ -27,7 +29,12 @@ class FormComp extends React.Component<IProps, IState> {
     selectedCoursePost: '',
     noVideosFound: false,
     selectedCourse: 'Select a course',
+    allCourses: []
   };
+
+  componentDidMount = () => {
+    this.loadCourses();
+  }
 
   handleSubmit = () => {
     let wasError: boolean = false;
@@ -67,25 +74,13 @@ class FormComp extends React.Component<IProps, IState> {
     }
   };
 
-  loadData = () => {
-    // if (!this.props.store.didLoadData) {
-      this.props.store.setDidLoadData();
-      let html: string;
-      html = "https://videoviewz-staging.herokuapp.com/video/" + this.state.selectedCourse;
-      axios.get(html)
-        .then(res => {
-          // debugger;
-          this.props.store.updateUrlResults(res.data);
-          console.log(res.data);
-        })
-
-      html = "https://videoviewz-staging.herokuapp.com/course";
-      axios.get(html)
-        .then(res => {
-          this.props.store.loadAllCourses(res.data);
-          console.log(res.data);
-        })
-    // }
+  loadCourses = () => {
+    let html = "https://videoviewz-staging.herokuapp.com/course";
+    axios.get(html)
+      .then(res => {
+        this.setState({ allCourses: res.data });
+        // this.props.store.loadAllCourses(res.data);
+      })
   }
 
   searchVideos = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -148,7 +143,16 @@ class FormComp extends React.Component<IProps, IState> {
   }
 
   handleSelectedCourse = (eventKey: string) => {
-    this.setState({ selectedCourse: eventKey });
+
+    this.setState({ selectedCourse: eventKey }, () => {
+
+      let html = "https://videoviewz-staging.herokuapp.com/video/" + this.state.selectedCourse;
+      axios.get(html)
+        .then(res => {
+          this.props.store.updateUrlResults(res.data);
+        })
+
+    });
   }
 
   changeSelectedCoursePost = () => {
@@ -159,7 +163,6 @@ class FormComp extends React.Component<IProps, IState> {
   render() {
     return (
       <div>
-        {this.loadData()}
         <Navbar bg="light" expand="lg">
           <img style={{ marginBottom: '5px' }}
             className="imgStyle"
@@ -171,7 +174,7 @@ class FormComp extends React.Component<IProps, IState> {
             <Nav className="mr-auto">
               <NavDropdown onSelect={this.handleSelectedCourse} title={this.state.selectedCourse} id="coursesDrop">
                 {
-                  this.props.store.allCourses.map((course, i) => {
+                  this.state.allCourses.map((course, i) => {
                     return <NavDropdown.Item key={i} eventKey={course.name}>{course.name}</NavDropdown.Item>
                   })
                 }
